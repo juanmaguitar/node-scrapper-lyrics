@@ -7,6 +7,7 @@ var jsesc = require('jsesc');
 var app = express();
 
 var apiKey = process.env.LYRICS_API_KEY;
+var publicFolder = path.join(__dirname, 'public');
 
 app.get('/lyric', function( req, res ) {
 
@@ -65,6 +66,8 @@ app.get('/lyric', function( req, res ) {
 	})
 
 })
+
+app.use( express.static(publicFolder) );
 
 app.listen(process.env.PORT || '8081');
 

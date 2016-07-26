@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery AJAX request</title>
+</head>
+<body>
+	<form>
+		<fieldset>
+			<legend>Search Lyric</legend>
+			<label>
+				<span>Band</span>
+				<input type="text" id="artist">
+			</label>
+			<label>
+				<span>Song</span>
+				<input type="text" id="track">
+			</label>
+			<button>Get Lyrics!!</button>
+		</fieldset>
+	</form>
+
+	<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<script>
+
+	$('form').on('submit', function(event) {
+		event.preventDefault();
+
+		var artist = $("#artist").val()
+		var track = $("#track").val()
+
+		$.ajax({
+			url: '/lyric',
+			data: {artist: artist, track: track},
+		})
+		.done(function( data ) {
+			console.log (data);
+		})
+	});
+
+
+
+	</script>
+</body>
+</html>

@@ -15,19 +15,11 @@ app.get('/lyric', function( req, res ) {
 	var artist = req.query.artist
 	var track = req.query.track;
 
-	//var artist = encodeURIComponent("bon jovi")
-	//var track = encodeURIComponent("livin' on a prayer")
-
-	console.log(artist)
-	console.log(track)
-
 	var url = "http://api.lyricsnmusic.com/songs?api_key=<%API_KEY%>&track=<%TRACK%>&artist=<%ARTIST%>"
 
 	url = url.replace('<%API_KEY%>', apiKey );
 	url = url.replace('<%TRACK%>', track );
 	url = url.replace('<%ARTIST%>', artist );
-
-	console.log (url);
 
 	getJSON(url, function(error, response){
 

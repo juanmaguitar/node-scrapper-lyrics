@@ -4,6 +4,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var getJSON = require('get-json');
 var jsesc = require('jsesc');
+var path = require('path');
 var app = express();
 
 var apiKey = process.env.LYRICS_API_KEY;

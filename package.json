@@ -1,0 +1,17 @@
+{
+  "name": "node-web-scrape",
+  "version": "0.0.1",
+  "description": "Scrape le web.",
+  "scripts" : {
+    "dev" : "nodemon index.js"
+  },
+  "main": "server.js",
+  "author": "Scotch",
+  "dependencies": {
+    "cheerio": "latest",
+    "express": "latest",
+    "get-json": "0.0.3",
+    "jsesc": "^2.2.0",
+    "request": "latest"
+  }
+}

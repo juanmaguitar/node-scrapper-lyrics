@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Scrape le web.",
   "scripts" : {
-    "dev" : "nodemon index.js"
+    "dev" : "nodemon index.js",
+    "start" : "node index.js"
   },
   "main": "server.js",
   "author": "Scotch",

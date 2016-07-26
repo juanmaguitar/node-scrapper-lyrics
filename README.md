@@ -6,7 +6,7 @@ It serve a unique keypoint `/lyric` that accepts 2 parameters:
 - `artist`: artist of the song
 - `track`: name of the song
 
-It also serves a html showing if the use of this API
+It also serves an `index.html` at `/` showing the use of this API w/ jQuery AJAX
 
 ## Routes Examples
 

@@ -8,6 +8,8 @@ It serve a unique keypoint `/lyric` that accepts 2 parameters:
 
 It also serves an `index.html` at `/` showing the use of this API w/ jQuery AJAX
 
+    https://rocky-hollows-34313.herokuapp.com/
+
 ## Routes Examples
 
 ### Lyric
@@ -27,6 +29,6 @@ To run local server...
 
     LYRICS_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXX  npm run dev
 
-To run remotely (in heroku) the proper BREWERYDB_API_KEY should be set before deploying...
+To run remotely (in heroku) the proper LYRICS_API_KEY should be set before deploying...
 
     heroku config:set LYRICS_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXX

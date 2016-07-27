@@ -31,32 +31,40 @@ app.get('/lyric', cors(), function( req, res ) {
 			return titleFromJson === titleFromRequest;
 		})
 
-		var urlLyric = firstTrack.url;
+		if (firstTrack) {
 
-		request(urlLyric, function(error, response, html){
+			var urlLyric = firstTrack.url;
 
-			if( !error ) {
+			request(urlLyric, function(error, response, html){
 
-				var $ = cheerio.load(html);
-				var json = {
-					url: urlLyric,
-					artist : decodeURIComponent(artist),
-					track : decodeURIComponent(track),
-					lyrics : ""
-				};
+				if( !error ) {
 
-				$('#main pre').filter(function() {
-					var $data = $(this);
-					lyrics = $data.text();
-					console.log(lyrics);
-					json.lyrics = lyrics;
-				});
+					var $ = cheerio.load(html);
+					var json = {
+						status: "ok",
+						url: urlLyric,
+						artist : decodeURIComponent(artist),
+						track : decodeURIComponent(track),
+						lyrics : ""
+					};
 
-				res.json(json);
+					$('#main pre').filter(function() {
+						var $data = $(this);
+						lyrics = $data.text();
+						console.log(lyrics);
+						json.lyrics = lyrics;
+					});
 
-			}
+					res.json(json);
 
-		})
+				}
+
+			})
+
+		}
+		else {
+			res.json({ "status": "ko", "msg" : "No song found" });
+		}
 
 	})
 

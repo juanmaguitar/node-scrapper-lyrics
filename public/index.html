@@ -3,40 +3,116 @@
 <head>
 	<meta charset="UTF-8">
 	<title>jQuery AJAX request</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="animate.css">
+	<style>
+		#lyric-container h2 { text-transform: capitalize;  }
+		#lyric-container p { font-size: 1.5em; }
+		.hidden { display: none; }
+	</style>
 </head>
 <body>
-	<form>
-		<fieldset>
-			<legend>Search Lyric</legend>
-			<label>
-				<span>Band</span>
-				<input type="text" id="artist">
-			</label>
-			<label>
-				<span>Song</span>
-				<input type="text" id="track">
-			</label>
-			<button>Get Lyrics!!</button>
-		</fieldset>
-	</form>
+
+
+	<div class="container">
+      <div class="header clearfix">
+        <h1 class="text-muted text-center">Lyrics Search</h1>
+      </div>
+
+      <div class="jumbotron col-md-8  col-md-offset-2">
+
+        <form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">Band/Artist</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="input-lg form-control" id="artist" placeholder="Type the name of the band/artist">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-2 control-label">Song</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="input-lg form-control" id="track" placeholder="Type the name of the song">
+				    </div>
+				  </div>
+
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <button id="search" type="submit" class="btn btn-lg btn-success">Search Lyric</button>
+							<button id="loading" class="hidden btn btn-lg btn-success disabled"><i class="glyphicon glyphicon-repeat gly-spin"></i> Loading lyric...</button>
+				    </div>
+				  </div>
+				</form>
+
+      </div>
+      <div id="msg-error" class="panel panel-danger hidden">
+			  <div class="panel-heading">Error!!</div>
+			  <div class="panel-body"><p>No songs found 😞</p></div>
+			</div>
+
+			<div id="lyric-container" class="col-md-8  col-md-offset-2">
+				<h2 class="text-center"></h2>
+				<p class="text-center"></p>
+			</div>
+
+
+
+	<!--  -->
+
 
 	<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<script>
 
-	$('form').on('submit', function(event) {
-		event.preventDefault();
+		var $inputArtist = $("#artist");
+		var $inputSong = $("#track");
 
-		var artist = $("#artist").val()
-		var track = $("#track").val()
+		var $btnSearch = $("#search");
+		var $btnLoading = $("#loading");
 
-		$.ajax({
-			url: '/lyric',
-			data: {artist: artist, track: track},
-		})
-		.done(function( data ) {
-			console.log (data);
-		})
-	});
+		var $msgError = $("#msg-error");
+
+		var $LyricHeading = $("#lyric-container h2");
+		var $LyricContent = $("#lyric-container p");
+
+		function buttonLoading( isLoading ) {
+			if (isLoading) {
+				$btnSearch.addClass('hidden');
+				$btnLoading.removeClass('hidden');
+			}
+			else {
+				$btnSearch.removeClass('hidden');
+				$btnLoading.addClass('hidden');
+			}
+		}
+
+
+		$('form').on('submit', function(event) {
+			event.preventDefault();
+
+			buttonLoading(true);
+
+			var artist = $inputArtist.val()
+			var track = $inputSong.val()
+
+			$.ajax({
+				url: '/lyric',
+				data: {artist: artist, track: track},
+			})
+			.done(function( data ) {
+				if (data.status === "ok") {
+					var lyricsText = data.lyrics.replace(/(?:\r\n|\r|\n)/g, '<br />');
+					$LyricHeading.html( data.track + " <small>" + data.artist + "</small>")
+					$LyricContent.html( lyricsText)
+					$msgError.addClass("hidden");
+				}
+				else {
+					$msgError.removeClass("hidden");
+					$LyricHeading.html("")
+					$LyricContent.html("")
+				}
+				buttonLoading(false);
+			})
+		});
 
 
 

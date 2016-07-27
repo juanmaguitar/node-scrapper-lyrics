@@ -5,12 +5,14 @@ var cheerio = require('cheerio');
 var getJSON = require('get-json');
 var jsesc = require('jsesc');
 var path = require('path');
+var cors = require('cors')
+
 var app = express();
 
 var apiKey = process.env.LYRICS_API_KEY;
 var publicFolder = path.join(__dirname, 'public');
 
-app.get('/lyric', function( req, res ) {
+app.get('/lyric', cors(), function( req, res ) {
 
 	var artist = req.query.artist
 	var track = req.query.track;
